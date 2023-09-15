@@ -1,5 +1,4 @@
 .git
 docker
-!docker/env.d
 !docker/snippets
 !docker/webapp.conf

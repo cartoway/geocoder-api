@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-ruby '~> 2.5.0'
+ruby '>= 3'
 
 gem 'rack'
 gem 'rake'
@@ -18,9 +18,11 @@ gem 'rest-client'
 gem 'border_patrol'
 gem 'activesupport'
 gem 'actionpack'
+gem 'rexml'
 
 gem 'grape-erb'
-gem 'geocoder', git: 'https://github.com/Mapotempo/geocoder.git'
+# Extra : Implementing autocomplete url to here and google_places_search
+gem 'geocoder'
 gem 'sqlite3'
 gem 'redis-activesupport'
 
@@ -38,4 +40,5 @@ end
 group :development, :test do
   gem 'byebug'
   gem 'rubocop'
+  gem 'redis', '< 5' # redis-store is buggy with redis 5 https://github.com/redis-store/redis-store/issues/358
 end

@@ -9,6 +9,19 @@ docker stack deploy -c ./docker-compose.yml ${PROJECT_NAME}
 ```
 
 ## Data build
+Then use the configuration file and edit it to match your needs:
+
+```bash
+cp ../config/environments/production.rb ./
+```
+
+Finally run the services:
+```
+docker-compose up -d
+```
+
+Initialization
+--------------
 
 After the first deployment, you need to initialize Addok database.
 

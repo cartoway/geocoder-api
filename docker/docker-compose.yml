@@ -1,80 +1,88 @@
 version: '3.7'
 
-x-default-deploy: &default-deploy
-  update_config:
-    order: start-first
-  restart_policy:
-    condition: any
-
-# keep command outside anchor because of performance problems
-x-default-redis: &default-redis
-  image: redis:${REDIS_VERSION:-6.2.5-alpine}
-  deploy:
-    <<: *default-deploy
-  volumes:
-    - ${APP_HOME:-..}/redis:/data
-
 services:
   api:
-    image: ${REGISTRY:-registry.mapotempo.com}/mapotempo-${EDT:-ce}/geocoder-api:${GEOCODER_VERSION:-latest}
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    ports:
+      - "8081:80" # HOST:CONTAINER, edit only HOST part
     volumes:
-      - ${APP_HOME:-..}/poly:/srv/app/poly
-    deploy:
-      <<: *default-deploy
+      - ..:/srv/app
+      - ./production.rb:/srv/app/config/environments/production.rb
+      - ./production.rb:/srv/app/config/environments/development.rb
+      - ../poly:/srv/app/poly
     environment:
-      PASSENGER_APP_ENV: test
       REDIS_COUNT_HOST: redis-count
       REDIS_HOST: redis-cache
-    networks:
-      - addok
-      - base
-      - redis_cache
-      - redis_count
+      APP_ENV: production # Swith to "development" for more traces
+    links:
+      - redis-cache
+      - redis-count
+      - addok-fr
+      - addok-lu
+    command: bundle exec puma -v -p 80 --pidfile 'server.pid'
+    restart: unless-stopped
 
   redis-cache:
-    <<: *default-redis
+    image: redis:${REDIS_VERSION:-7-alpine}
     hostname: redis-cache
     command: redis-server --save ""
-    networks:
-      - redis_cache
+    volumes:
+      - ./redis:/data
+    restart: unless-stopped
 
   redis-count:
-    <<: *default-redis
+    image: redis:${REDIS_VERSION:-7-alpine}
     hostname: redis-count
     command: redis-server --appendonly yes
     volumes:
-      - ${APP_HOME:-..}/redis-count:/data
-    networks:
-      - redis_count
+      - ./redis-count:/data
+    restart: unless-stopped
 
-  addok:
-    image: registry.mapotempo.com/mapotempo/addok:${ADDOK_VERSION:-1.1.0-rc1-2}
+  # France
+  addok-fr:
+    build:
+      context: addok
     volumes:
-      - ${APP_HOME:-..}/addresses:/addresses
+      - ./addok/addok-fr.conf:/etc/addok/addok.conf
+      - ./addresses-fr:/addresses
+    links:
+      - redis-addok-fr
     environment:
-      ADDOK_HOST: "redis-server"
-      ADDOK_ATTRIBUTION: "BANO"
+      ADDOK_HOST: "redis-addok-fr"
+      ADDOK_ATTRIBUTION: "BAN"
       ADDOK_LICENCE: "ODbL"
-    deploy:
-      <<: *default-deploy
-    networks:
-      - addok
-      - redis_server
+    command: gunicorn --bind 0.0.0.0:7878 --timeout 7200 --workers 8 addok.http.wsgi
 
-  redis-server:
-    <<: *default-redis
-    hostname: redis-server
+    restart: unless-stopped
+
+  redis-addok-fr:
+    image: redis:${REDIS_VERSION:-7-alpine}
     command: redis-server --save ""
     volumes:
-      - ${APP_HOME:-..}/data:/data
-    networks:
-      - redis_server
+      - ./data:/data
+    restart: unless-stopped
 
-networks:
-  addok:
-  base:
-    external: ${EXTERNAL_NETWORK:-false}
-    driver: overlay
-  redis_cache:
-  redis_count:
-  redis_server:
+  # Luxemburg
+  addok-lu:
+    build:
+      context: addok
+    volumes:
+      - ./addok/addok-lu.conf:/etc/addok/addok.conf
+      - ./addresses-lu:/addresses
+    links:
+      - redis-addok-lu
+    environment:
+      ADDOK_HOST: "redis-addok-lu"
+      ADDOK_ATTRIBUTION: "Grand-Duché of Luxembourg"
+      ADDOK_LICENCE: "CC0"
+    command: gunicorn --bind 0.0.0.0:7878 --timeout 7200 --workers 8 addok.http.wsgi
+    restart: unless-stopped
+
+  redis-addok-lu:
+    image: redis:${REDIS_VERSION:-7-alpine}
+    command: redis-server --save ""
+    volumes:
+      - ./data:/data
+    restart: unless-stopped
