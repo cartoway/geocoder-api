@@ -64,7 +64,10 @@ module Api
           count :complete
           params[:limit] = [params[:limit] || 10, 10].min
           results = GeocoderWrapper::wrapper_complete(APIBase.profile(params[:api_key]), params)
-          if results
+          if results && results[:error]
+            message = JSON.parse(results[:response].body)["description"]
+            error!(message, results[:response].code)
+          elsif results
             results[:geocoding][:version] = 'draft#namespace#score'
             count_incr :complete, transactions: 1
             present results, with: GeocodeResult
@@ -84,7 +87,10 @@ module Api
         get do
           count :reverse
           results = GeocoderWrapper::wrapper_reverse(APIBase.profile(params[:api_key]), params)
-          if results
+          if results && results[:error]
+            message = JSON.parse(results[:response].body)["description"]
+            error!(message, results[:response].code)
+          elsif results
             results[:geocoding][:version] = 'draft#namespace#score'
             count_incr :reverse, transactions: 1
             present results, with: GeocodeResult
