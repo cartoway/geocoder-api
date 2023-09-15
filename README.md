@@ -48,7 +48,7 @@ Access it at http://localhost:8558
 
 
 ```
-bundle exec rackup [-p 8558]
+bundler exec puma -v -p 8558 --pidfile 'tmp/server.pid'
 ```
 
 ## Building images (dev/test only)
