@@ -115,7 +115,7 @@ module Wrappers
     end
 
     def version(query = nil)
-      "#{super} - addok:1.1.0-rc1.2"
+      "#{super} - addok"
     end
 
     private
@@ -150,7 +150,7 @@ module Wrappers
           lat: params['lat'],
           lon: params['lng'],
           type: (params[:type] if ['house', 'street'].include?(params[:type]))
-        }.merge(flatten_param(params))
+        }.compact.merge(flatten_param(params))
 
         response = RestClient.get(@url + GeocoderWrapper.config[:addok_endpoint], {params: p}) { |response, request, result, &block|
           case response.code
