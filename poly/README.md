@@ -1,15 +1,17 @@
-Download GeoJson from https://mapzen.com/data/borders/
+Download admin_levl 6 and 8 from as GeoJson from https://osm-boundaries.com
+
+Eg. for France
+```
+curl --location --max-redirs -1 "https://osm-boundaries.com/Download/Submit?apiKey=a08a557eb440351e00d4b4aa015cfbef&db=osm20230605&osmIds=-2202162&recursive&minAdminLevel=6&maxAdminLevel=8&format=GeoJSON&srid=4326" > admin_level_x.geojson
+```
 
 ## Convert to SQLite
 
-Merge geojson admin level
-
-    jq -s '.[0].features + .[1].features | {type: "FeatureCollection", features: .}' admin_level_8.geojson admin_level_6.geojson > admin_level_x.geojson
-
 Convert to Spatialite
 
-    ogr2ogr -sql "SELECT name, '' AS label, admin_level FROM admin_level_x" -f "SQLite" -dsco "SPATIALITE=YES" -nln admin_level_x admin_level_x.sqlite admin_level_x.geojson
-    # ogr2ogr -sql "SELECT name, '' AS label, admin_level FROM ogrgeojson" -f "SQLite" -dsco "SPATIALITE=YES" -nln admin_level_x admin_level_x.sqlite admin_level_x.geojson
+```bash
+ogr2ogr -sql "SELECT name, '' AS label, admin_level FROM admin_level_x" -f "SQLite" -dsco "SPATIALITE=YES" -nln admin_level_x admin_level_x.sqlite admin_level_x.geojson
+```
 
 Extend the admin level 8 names with the admin level 6 names
 
