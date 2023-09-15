@@ -33,14 +33,9 @@ docker compose up -d
 ```
 
 ### generate necessary data
-By default it creates data for 2A corsica (317 Kb)
 ```
-./initialize.sh
-```
-
-To build other department pass it as an argument (*full* for France)
-```
-./initialize.sh 33
+./builder/initialize-fr.sh [DEP NUMBER]
+./builder/initialize-lu.sh
 ```
 
 ### Launch api

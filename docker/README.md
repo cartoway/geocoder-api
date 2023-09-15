@@ -30,5 +30,6 @@ First, download and put json files in `data` directory. You may may to prefix th
 Then run the initialization script:
 
 ```
-./builder/initialize.sh ${PROJECT_NAME}
+./builder/initialize-fr.sh
+./builder/initialize-lu.sh
 ```
