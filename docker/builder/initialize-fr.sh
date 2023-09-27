@@ -6,12 +6,13 @@ set -e
 echo "Your variables are : DEPARTMENT: $DEP"
 
 if [ -z ${DEP} ]; then
-  BANO="http://bano.openstreetmap.fr/data/full.sjson.gz"
+  BANO="https://bano.openstreetmap.fr/data/full.sjson.gz"
 else
-  BANO="http://bano.openstreetmap.fr/data/bano-${DEP}.json.gz"
+  BANO="https://bano.openstreetmap.fr/data/bano-${DEP}.json.gz"
 fi
+cd docker
 mkdir -p addresses-fr
-wget "$BANO" -O "./addresses-fr/bano.sjson.gz"
+curl "$BANO" > "./addresses-fr/bano.sjson.gz"
 
 docker-compose exec redis-addok-fr redis-cli FLUSHALL
 
