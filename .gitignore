@@ -40,3 +40,8 @@ addresses
 data*/*.rdb
 poly/*.sqlite
 redis-count
+
+docker/addresses-*
+docker/data
+docker/redis*
+docker/production.rb

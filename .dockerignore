@@ -1,4 +1,5 @@
 .git
-docker
-!docker/snippets
-!docker/webapp.conf
+docker/addresses-*
+docker/data
+docker/redis*
+docker/production.rb

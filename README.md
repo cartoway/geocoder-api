@@ -168,3 +168,28 @@ curl -v -X POST -H "Content-Type: text/csv" --data-binary @in.csv http://localho
 
 ## Reverse geocode
 [Get address from lat/lng](http://geocoder.mapotempo.com/reverse.html)
+
+
+# Docker
+## Data build
+Then use the configuration file and edit it to match your needs:
+
+```bash
+cp ./config/environments/production.rb ./docker/
+```
+
+Run the services:
+```
+docker-compose up -d
+```
+
+## Initialization
+After the first deployment, you need to initialize Addok database.
+
+First, download and put json files in `data` directory. You may may to prefix them with numbers to ensure the order of the import.
+
+Then run the initialization script:
+```
+./builder/initialize-fr.sh
+./builder/initialize-lu.sh
+```

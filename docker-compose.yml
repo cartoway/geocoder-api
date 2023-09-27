@@ -2,16 +2,15 @@ version: '3.7'
 
 services:
   api:
-    build:
-      context: ..
-      dockerfile: docker/Dockerfile
+    build: .
+    image: geocoder-api:${CARTOROUTE_VERSION:-latest}
     ports:
       - "8081:80" # HOST:CONTAINER, edit only HOST part
     volumes:
-      - ..:/srv/app
-      - ./production.rb:/srv/app/config/environments/production.rb
-      - ./production.rb:/srv/app/config/environments/development.rb
-      - ../poly:/srv/app/poly
+      - .:/srv/app
+      - ./docker/production.rb:/srv/app/config/environments/production.rb
+      - ./docker/production.rb:/srv/app/config/environments/development.rb
+      - ./poly:/srv/app/poly
     environment:
       REDIS_COUNT_HOST: redis-count
       REDIS_HOST: redis-cache
@@ -29,7 +28,7 @@ services:
     hostname: redis-cache
     command: redis-server --save ""
     volumes:
-      - ./redis:/data
+      - ./docker/redis-cache:/data
     restart: unless-stopped
 
   redis-count:
@@ -37,16 +36,17 @@ services:
     hostname: redis-count
     command: redis-server --appendonly yes
     volumes:
-      - ./redis-count:/data
+      - ./docker/redis-count:/data
     restart: unless-stopped
 
   # France
   addok-fr:
     build:
-      context: addok
+      context: docker/addok
+    image: addok:${CARTOROUTE_VERSION:-latest}
     volumes:
-      - ./addok/addok-fr.conf:/etc/addok/addok.conf
-      - ./addresses-fr:/addresses
+      - ./docker/addok/addok-fr.conf:/etc/addok/addok.conf
+      - ./docker/addresses-fr:/addresses
     links:
       - redis-addok-fr
     environment:
@@ -61,16 +61,17 @@ services:
     image: redis:${REDIS_VERSION:-7-alpine}
     command: redis-server --save ""
     volumes:
-      - ./data:/data
+      - ./docker/redis-fr:/data
     restart: unless-stopped
 
   # Luxemburg
   addok-lu:
     build:
-      context: addok
+      context: docker/addok
+    image: addok:${CARTOROUTE_VERSION:-latest}
     volumes:
-      - ./addok/addok-lu.conf:/etc/addok/addok.conf
-      - ./addresses-lu:/addresses
+      - ./docker/addok/addok-lu.conf:/etc/addok/addok.conf
+      - ./docker/addresses-lu:/addresses
     links:
       - redis-addok-lu
     environment:
@@ -84,5 +85,5 @@ services:
     image: redis:${REDIS_VERSION:-7-alpine}
     command: redis-server --save ""
     volumes:
-      - ./data:/data
+      - ./docker/redis-lu:/data
     restart: unless-stopped
