@@ -2,8 +2,6 @@ FROM ruby:3.2-bookworm
 ENTRYPOINT []
 CMD ["/bin/bash"]
 
-LABEL maintainer="Mapotempo <contact@mapotempo.com>"
-
 VOLUME /srv/app/poly
 
 ENV REDIS_HOST redis-cache

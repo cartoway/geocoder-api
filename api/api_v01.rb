@@ -69,7 +69,7 @@ This REST API is described with Swagger. The Swagger descriptor defines the requ
 ### API key
 
 All access to the API are subject to an `api_key` parameter in order to authenticate the user.
-Usage: `http://geocode.mapotempo.com/0.1/geocode?api_key=***`
+Usage: `http://localhost:8558/0.1/geocode?api_key=***`
 
 ### Return
 
@@ -85,11 +85,11 @@ Other map layers are availables if you need.
 
 ### Geocode
 
-[Geocode full text address](http://geocode.mapotempo.com/geocode.html)
+[Geocode full text address](http://localhost:8558/geocode.html)
 
 ### Reverse geocode
 
-[Get address from lat/lng](http://geocode.mapotempo.com/reverse.html)
+[Get address from lat/lng](http://localhost:8558/reverse.html)
         '
       }
     )

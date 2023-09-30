@@ -2,8 +2,6 @@ FROM python:3.11
 ENTRYPOINT []
 CMD ["/bin/sh"]
 
-LABEL maintainer="Mapotempo <contact@mapotempo.com>"
-
 ARG ADDOK_VERSION
 ENV ADDOK_VERSION ${ADDOK_VERSION:-v1.1.1}
 ENV ADDOK_FR_VERSION v1.0.1

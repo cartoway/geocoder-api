@@ -2,8 +2,6 @@
 Offers an unified API for multiple geocoders like [Addok](https://github.com/etalab/addok), OpenCageData, Here, Google based on countries distribution. The main idea of this API is to define some specific geocoder for some countries and a fallback geocoder for all other countries.
 Build in Ruby with a [Grape](https://github.com/intridea/grape) REST [swagger](http://swagger.io/) API compatible with [geocodejson-spec](https://github.com/yohanboniface/geocodejson-spec). Internal use of [Geocoder Gem](https://github.com/alexreisner/geocoder).
 
-![Build Status](https://github.com/Mapotempo/geocoder-api/actions/workflows/main.yml/badge.svg?branch=master)
-
 # Local installation
 ## Prerequisite
 You need to install prerequisite packages :
@@ -25,7 +23,7 @@ bundle install
 
 # Running (dev/test only)
 
-## Use Docker Compose to develop Mapotempo Geocoder
+## Use Docker Compose to develop Geocoder
 
 ### Launch necessary services
 ```
@@ -57,9 +55,9 @@ The countries data `sanitizer/countryInfo.txt` for supported languages can be up
 
 # Usage
 The API is defined in Swagger format at
-http://localhost:8558/swagger_doc
+http://localhost:8558/0.1/swagger_doc
 and can be tested with Swagger-UI
-https://swagger.mapotempo.com/?url=https://geocoder.mapotempo.com/swagger_doc
+https://petstore.swagger.io/?url=http://localhost:8558/0.1/swagger_doc
 
 ## Geocoding and Address completion
 The search can be done by full text free form or by fields. Prefer fields form when you have an already splitted address. For any form, the country is a required field, use a simple country name or code in two or three chars.
@@ -164,10 +162,10 @@ curl -v -X POST -H "Content-Type: text/csv" --data-binary @in.csv http://localho
 # Examples
 
 ## Geocode
-[Geocode full text address](http://geocoder.mapotempo.com/geocode.html)
+[Geocode full text address](http://localhost:8558/geocode.html)
 
 ## Reverse geocode
-[Get address from lat/lng](http://geocoder.mapotempo.com/reverse.html)
+[Get address from lat/lng](http://localhost:8558/reverse.html)
 
 
 # Docker
