@@ -58,7 +58,7 @@ module Api
         contact_email: ::GeocoderWrapper::config[:product_contact_email],
         contact_url: ::GeocoderWrapper::config[:product_contact_url],
         license: 'GNU Affero General Public License 3',
-        license_url: 'https://raw.githubusercontent.com/Mapotempo/geocoder-api/master/LICENSE',
+        license_url: 'https://raw.githubusercontent.com/cartoroute/geocoder-api/master/LICENSE',
         description: '
 ## Technical access
 
