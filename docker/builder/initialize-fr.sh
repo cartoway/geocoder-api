@@ -18,6 +18,7 @@ docker-compose exec redis-addok-fr redis-cli FLUSHALL
 
 docker-compose run --rm addok-fr bash -c "\\
   zcat /addresses/bano.sjson.gz | \\
+  jq -c '. + {citycode: (.citycode // .id) }' | \\
   jq -c 'def mapping: {\"city\":\"municipality\",\"town\":\"municipality\",\"village\":\"municipality\",\"place\":\"locality\",\"street\":\"street\"}; . + {type: mapping[.type]}' | \\
   jq -c 'del(.housenumbers[]?.id)' | \\
   addok batch"
