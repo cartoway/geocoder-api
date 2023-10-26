@@ -87,7 +87,7 @@ module Wrappers
         STDERR.puts "Addok Geocodes #{Thread.current.object_id}, slice #{slice}/#{slice_number}" if slice_number > 1
 
         if !csv_index_p.empty?
-          search = ENV['APP_ENV'] != 'production' ? '/search' : '/search2steps'
+          search = GeocoderWrapper.config[:addok_endpoint]
           addok_geocodes("#{search}/csv", csv_string, ['q0'], ['q']).each{ |result|
             index, p = csv_index_p.shift
             results[index] = result
