@@ -32,8 +32,8 @@ docker compose up -d
 
 ### generate necessary data
 ```
-./builder/initialize-fr.sh [DEP NUMBER]
-./builder/initialize-lu.sh
+./docker/builder/initialize-fr.sh [DEP NUMBER]
+./docker/builder/initialize-lu.sh
 ```
 
 ### Launch api
