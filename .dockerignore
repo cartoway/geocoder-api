@@ -1,4 +1,5 @@
 .git
+poly
 docker/addresses-*
 docker/data
 docker/redis*
