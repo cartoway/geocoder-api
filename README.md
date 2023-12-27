@@ -1,82 +1,32 @@
 # Geocoder API
 Offers an unified API for multiple geocoders like [Addok](https://github.com/etalab/addok), OpenCageData, Here, Google based on countries distribution. The main idea of this API is to define some specific geocoder for some countries and a fallback geocoder for all other countries.
-Build in Ruby with a [Grape](https://github.com/intridea/grape) REST [swagger](http://swagger.io/) API compatible with [geocodejson-spec](https://github.com/yohanboniface/geocodejson-spec). Internal use of [Geocoder Gem](https://github.com/alexreisner/geocoder).
+Build in Ruby with a [Grape](https://github.com/intridea/grape) REST [swagger](http://swagger.io/) API compatible with [geocodejson-spec](https://github.com/yohanboniface/geocodejson-spec). Internaly also use [Geocoder Gem](https://github.com/alexreisner/geocoder).
 
-# Local installation
-## Prerequisite
-You need to install prerequisite packages :
+## API
 
-```
-apt-get install -y git build-essential zlib1g-dev gdal-bin zlib1g libsqlite3-mod-spatialite libsqlite3-dev libspatialite-dev
-```
-
-## Installation
-If you need to create a kml, install package containing ogr2ogr exec from system package (GDAL).
-
-In geocoder-api as root directory:
-
-```
-bundle install
-# Download and build French KML boundaries
-(cd contrib && sh ./osm2france+dom-geojson.sh)
-```
-
-# Running (dev/test only)
-
-## Use Docker Compose to develop Geocoder
-
-### Launch necessary services
-```
-docker compose up -d
-```
-
-### generate necessary data
-```
-./docker/builder/initialize-fr.sh [DEP NUMBER]
-./docker/builder/initialize-lu.sh
-```
-
-### Launch api
-Access it at http://localhost:8558
-
-
-```
-bundler exec puma -v -p 8558 --pidfile 'tmp/server.pid'
-```
-
-## Building images (dev/test only)
-If you need to work with local built addok images and api
-
-```
-docker compose -f docker-compose.yml -f docker-compose-build.yml build
-```
-
-The countries data `sanitizer/countryInfo.txt` for supported languages can be update from https://download.geonames.org/export/dump/countryInfo.txt . The data is under creative commons attributions from GeoNames.
-
-# Usage
 The API is defined in Swagger format at
-http://localhost:8558/0.1/swagger_doc
+http://localhost:8081/0.1/swagger_doc
 and can be tested with Swagger-UI
-https://petstore.swagger.io/?url=http://localhost:8558/0.1/swagger_doc
+https://petstore.swagger.io/?url=http://localhost:8081/0.1/swagger_doc
 
-## Geocoding and Address completion
-The search can be done by full text free form or by fields. Prefer fields form when you have an already splitted address. For any form, the country is a required field, use a simple country name or code in two or three chars.
+### Geocoding and Address completion
+The search can be done by full text free form or by fields. Prefer fields form when you have an already split address. For any form, the country is a required field, use a simple country name or code in two or three chars.
 
 Search can be guided by proximity. Set latitude and longitude of an close location.
 
-## Reverse geocoding
+### Reverse geocoding
 Retrieve the closest address from latitude and longitude position by GET request.
 
-## Unitary request
+### Unitary request
 Unitary requesting convert only one address or coordinates at once using GET request.
 
 Geocoding:
 
 ```
-http://localhost:8558/0.1/geocode.json?&api_key=demo&country=fr&query=2+Avenue+Pierre+Angot+64000+Pau
+http://localhost:8081/0.1/geocode.json?&api_key=demo&country=fr&query=2+Avenue+Pierre+Angot+64000+Pau
 ```
 
-Returns geocodejson (and geojson) valid result:
+Returns GeocodeJSON (and GeoJSON) valid result:
 ```json
 {
   "type":"FeatureCollection",
@@ -112,10 +62,9 @@ Returns geocodejson (and geojson) valid result:
 }
 ```
 
-
 Reverse:
 ```
-http://localhost:8558/0.1/reverse.json?api_key=demo&lat=44&lng=0
+http://localhost:8081/0.1/reverse.json?api_key=demo&lat=44&lng=0
 ```
 
 ```json
@@ -152,42 +101,72 @@ http://localhost:8558/0.1/reverse.json?api_key=demo&lat=44&lng=0
 }
 ```
 
-## Batch request
-Batch convert a list in json or CSV format using POST request.
+### Batch request
+Batch convert a list in JSON or CSV format using POST request.
 
 ```
-curl -v -X POST -H "Content-Type: text/csv" --data-binary @in.csv http://localhost:8558/0.1/geocode.csv?api_key=demo > out.csv
+curl -v -X POST -H "Content-Type: text/csv" --data-binary @in.csv http://localhost:8081/0.1/geocode.csv?api_key=demo > out.csv
 ```
 
-# Examples
+## Examples
 
-## Geocode
-[Geocode full text address](http://localhost:8558/geocode.html)
+### Geocode
+[Geocode full text address](http://localhost:8081/geocode.html)
 
-## Reverse geocode
-[Get address from lat/lng](http://localhost:8558/reverse.html)
+### Reverse geocode
+[Get address from lat/lng](http://localhost:8081/reverse.html)
 
+## Docker
 
-# Docker
-## Data build
-Then use the configuration file and edit it to match your needs:
-
+Copy and adjust environments files.
 ```bash
 cp ./config/environments/production.rb ./docker/
 ```
 
-Run the services:
+Create a `.env` from `.env.template`, and adapt if required.
+Enable components in `COMPOSE_FILE` var. Only required for non external engines.
+
+Build docker images
+```
+docker-compose build
+```
+
+Launch containers
 ```
 docker-compose up -d
 ```
 
-## Initialization
-After the first deployment, you need to initialize Addok database.
+The countries data `sanitizer/countryInfo.txt` for supported languages can be update from https://download.geonames.org/export/dump/countryInfo.txt . The data is under creative commons attributions from GeoNames.
 
-First, download and put json files in `data` directory. You may may to prefix them with numbers to ensure the order of the import.
+### Addok Initialization
+After the first start, you need to initialize Addok database.
 
-Then run the initialization script:
+Run the initialization script:
 ```
-./builder/initialize-fr.sh
-./builder/initialize-lu.sh
+./docker/builder/initialize-fr.sh [DEP NUMBER]
+./docker/builder/initialize-lu.sh
 ```
+
+```
+# Download and build French KML boundaries
+(cd contrib && sh ./osm2france+dom-geojson.sh)
+```
+
+## Without Docker
+You need to install prerequisite packages:
+```
+apt-get install -y git build-essential zlib1g-dev gdal-bin zlib1g libsqlite3-mod-spatialite libsqlite3-dev libspatialite-dev
+```
+
+If you need to create a KML, Install package containing `ogr2ogr` bin as system package (GDAL).
+
+In geocoder-api as root directory:
+```
+bundle install
+```
+
+## Dev / Tests
+```
+bundler exec puma -v -p 8081 --pidfile 'tmp/server.pid'
+```
+Access it at http://localhost:8081
