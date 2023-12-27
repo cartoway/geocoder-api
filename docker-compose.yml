@@ -14,7 +14,7 @@ services:
     environment:
       REDIS_HOST: redis-cache
       APP_ENV: production # Swith to "development" for more traces
-      HERE8_APIKEY: ${HERE8_APIKEY}
+      HERE_APIKEY: ${HERE_APIKEY}
     links:
       - redis-cache
     command: bundle exec puma -v -p 80 --pidfile 'server.pid'

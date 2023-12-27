@@ -65,7 +65,7 @@ module GeocoderWrapper
         map: [
           {
             name: 'OpenStreetMap',
-            url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+            url: 'https://a.tile.openstreetmap.org/{z}/{x}/{y}.png',
             options: { zoom: 18, attribution: 'Map data &copy; <a href="https://openstreetmap.org">OpenStreetMap</a> contributors' },
             # default: true,
             # overlay: false
@@ -75,7 +75,7 @@ module GeocoderWrapper
     },
     ruby_geocode: {
       # Set the appropriate authentication if required
-      here: 'API_KEY'
+      here: ENV['HERE_APIKEY'],
       opencagedata: 'API_KEY'
     },
     addok_endpoint: '/search',

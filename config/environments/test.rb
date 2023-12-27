@@ -75,7 +75,7 @@ module GeocoderWrapper
     },
     ruby_geocode: {
       # Set the appropriate authentication if required
-      here: 'API_KEY',
+      here: ENV['HERE_APIKEY'],
       opencagedata: 'API_KEY'
     },
     addok_endpoint: '/search',
