@@ -1,0 +1,58 @@
+version: '3.7'
+
+services:
+  api:
+    links:
+      - addok-fr
+      - addok-lu
+    command: bundle exec puma -v -p 80 --pidfile 'server.pid'
+    restart: unless-stopped
+
+  # France
+  addok-fr:
+    build:
+      context: docker/addok
+    image: addok:${CARTOROUTE_VERSION:-latest}
+    volumes:
+      - ./docker/addok/addok-fr.conf:/etc/addok/addok.conf
+      - ./docker/addresses-fr:/addresses
+    links:
+      - redis-addok-fr
+    environment:
+      ADDOK_HOST: "redis-addok-fr"
+      ADDOK_ATTRIBUTION: "BAN"
+      ADDOK_LICENCE: "ODbL"
+    command: gunicorn --bind 0.0.0.0:7878 --timeout 7200 --workers 8 addok.http.wsgi
+
+    restart: unless-stopped
+
+  redis-addok-fr:
+    image: redis:${REDIS_VERSION:-7-alpine}
+    command: redis-server --save ""
+    volumes:
+      - ./docker/redis-fr:/data
+    restart: unless-stopped
+
+  # Luxemburg
+  addok-lu:
+    build:
+      context: docker/addok
+    image: addok:${CARTOROUTE_VERSION:-latest}
+    volumes:
+      - ./docker/addok/addok-lu.conf:/etc/addok/addok.conf
+      - ./docker/addresses-lu:/addresses
+    links:
+      - redis-addok-lu
+    environment:
+      ADDOK_HOST: "redis-addok-lu"
+      ADDOK_ATTRIBUTION: "Grand-Duché of Luxembourg"
+      ADDOK_LICENCE: "CC0"
+    command: gunicorn --bind 0.0.0.0:7878 --timeout 7200 --workers 8 addok.http.wsgi
+    restart: unless-stopped
+
+  redis-addok-lu:
+    image: redis:${REDIS_VERSION:-7-alpine}
+    command: redis-server --save ""
+    volumes:
+      - ./docker/redis-lu:/data
+    restart: unless-stopped
