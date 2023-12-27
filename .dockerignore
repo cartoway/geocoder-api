@@ -1,4 +1,5 @@
 .git
+.env
 poly
 docker/addresses-*
 docker/data
