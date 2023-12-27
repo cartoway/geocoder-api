@@ -1,0 +1,16 @@
+version: '3.7'
+
+services:
+  api:
+    environment:
+      REDIS_COUNT_HOST: redis-count
+    links:
+      - redis-count
+
+  redis-count:
+    image: redis:${REDIS_VERSION:-7-alpine}
+    hostname: redis-count
+    command: redis-server --appendonly yes
+    volumes:
+      - ./docker/redis-count:/data
+    restart: unless-stopped
