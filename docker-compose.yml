@@ -12,13 +12,11 @@ services:
       - ./docker/production.rb:/srv/app/config/environments/development.rb
       - ./poly:/srv/app/poly
     environment:
-      REDIS_COUNT_HOST: redis-count
       REDIS_HOST: redis-cache
       APP_ENV: production # Swith to "development" for more traces
       HERE8_APIKEY: ${HERE8_APIKEY}
     links:
       - redis-cache
-      - redis-count
     command: bundle exec puma -v -p 80 --pidfile 'server.pid'
     restart: unless-stopped
 
@@ -28,12 +26,4 @@ services:
     command: redis-server --save ""
     volumes:
       - ./docker/redis-cache:/data
-    restart: unless-stopped
-
-  redis-count:
-    image: redis:${REDIS_VERSION:-7-alpine}
-    hostname: redis-count
-    command: redis-server --appendonly yes
-    volumes:
-      - ./docker/redis-count:/data
     restart: unless-stopped
