@@ -14,6 +14,8 @@ cd docker
 mkdir -p addresses-fr
 curl "$BANO" > "./addresses-fr/bano.sjson.gz"
 
+cd ..
+
 docker-compose exec redis-addok-fr redis-cli FLUSHALL
 
 docker-compose run --rm addok-fr bash -c "\\
@@ -22,6 +24,7 @@ docker-compose run --rm addok-fr bash -c "\\
   zcat /addresses/bano.sjson.gz | tr -d \"\\t\" | jq -c 'select(.type==\"city\" or .type==\"town\" or .type==\"village\")' | jq --slurp 'map({(.id): .}) | add' > /addresses/city-orig.json
   zcat /addresses/bano.sjson.gz | tr -d \"\\t\" | jq -c 'select(.type==\"place\" or .type==\"street\") | {id: .citycode, postcode: .postcode}' | uniq | jq --slurp 'group_by(.id)| map({(.[0].id): {postcode: [.[].postcode] | flatten | unique}}) | add' > /addresses/city-postcode.json
   jq --slurp -c '.[0] * .[1] | .[]' /addresses/city-orig.json /addresses/city-postcode.json | gzip > /addresses/city.sjson.gz
+  rm /addresses/city-orig.json /addresses/city-postcode.json
 
   # Duplicate entry, one for each postcode
   # https://github.com/addok/addok/issues/811
