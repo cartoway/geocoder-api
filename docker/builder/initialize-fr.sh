@@ -22,13 +22,12 @@ docker-compose run --rm addok-fr bash -c "\\
   # Compute all possible postcodes for city
   # https://github.com/osm-fr/bano/issues/369
   zcat /addresses/bano.sjson.gz | tr -d \"\\t\" | jq -c 'select(.type==\"city\" or .type==\"town\" or .type==\"village\")' | jq --slurp 'map({(.id): .}) | add' > /addresses/city-orig.json
-  zcat /addresses/bano.sjson.gz | tr -d \"\\t\" | jq -c 'select(.type==\"place\" or .type==\"street\") | {id: .citycode, postcode: .postcode}' | uniq | jq --slurp 'group_by(.id)| map({(.[0].id): {postcode: [.[].postcode] | flatten | unique}}) | add' > /addresses/city-postcode.json
-  jq --slurp -c '.[0] * .[1] | .[]' /addresses/city-orig.json /addresses/city-postcode.json | gzip > /addresses/city.sjson.gz
+  zcat /addresses/bano.sjson.gz | tr -d \"\\t\" | jq -c '. | {id: (.citycode // .id), postcode: .postcode}' | uniq | jq --slurp 'group_by(.id)| map({(.[0].id): {postcode: [.[].postcode] | flatten | unique}}) | add' > /addresses/city-postcode.json
+  jq --slurp -c '.[0] * .[1] | .[]' /addresses/city-orig.json /addresses/city-postcode.json | gzip > /addresses/city-multi.sjson.gz
   rm /addresses/city-orig.json /addresses/city-postcode.json
 
   # Duplicate entry, one for each postcode
   # https://github.com/addok/addok/issues/811
-  mv /addresses/city.sjson.gz /addresses/city-multi.sjson.gz && \\
   zcat /addresses/city-multi.sjson.gz | jq  '. + {postcode: .postcode[]}' | gzip > /addresses/city.sjson.gz
 
   zcat /addresses/city.sjson.gz | \\
