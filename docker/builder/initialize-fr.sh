@@ -45,7 +45,7 @@ docker-compose run --rm addok-fr bash -c "\\
   addok batch"
 
 # # Patch BANO
-# docker-compose run --rm --entrypoint /bin/bash addok-fr -c "ls ./addresses/*.json | xargs cat | addok batch"
+docker-compose run --rm --entrypoint /bin/bash addok-fr -c "ls ./addresses/*.*json | xargs cat | addok batch"
 
 docker-compose run --rm addok-fr addok ngrams
 docker-compose exec redis-addok-fr redis-cli BGSAVE
