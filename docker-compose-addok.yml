@@ -3,9 +3,36 @@ version: '3.7'
 services:
   api:
     depends_on:
+      - addok-es
       - addok-fr
       - addok-lu
     command: bundle exec puma -v -p 80 --pidfile 'server.pid'
+    restart: unless-stopped
+
+  # Spain
+  addok-es:
+    build:
+      context: docker/addok
+    image: addok:${CARTOROUTE_VERSION:-latest}
+    volumes:
+      - ./docker/addok/addok-es.conf:/etc/addok/addok.conf
+      - ./docker/addresses-es:/addresses
+    links:
+      - redis-addok-es
+    environment:
+      ADDOK_HOST: "redis-addok-es"
+      ADDOK_ATTRIBUTION: "CartoCiudad"
+      ADDOK_LICENCE: "CC By 4.0"
+    command: gunicorn --bind 0.0.0.0:7878 --timeout 7200 --workers 8 addok.http.wsgi
+    restart: unless-stopped
+    ports:
+      - "7878:7878" # HOST:CONTAINER, edit only HOST part
+
+  redis-addok-es:
+    image: redis:${REDIS_VERSION:-7-alpine}
+    command: redis-server --save ""
+    volumes:
+      - ./docker/redis-es:/data
     restart: unless-stopped
 
   # France

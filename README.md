@@ -143,6 +143,7 @@ After the first start, you need to initialize Addok database.
 
 Run the initialization script:
 ```
+./docker/builder/initialize-fr.sh [PROV NAME]
 ./docker/builder/initialize-fr.sh [DEP NUMBER]
 ./docker/builder/initialize-lu.sh
 ```

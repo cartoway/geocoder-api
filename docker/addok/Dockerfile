@@ -4,7 +4,9 @@ CMD ["/bin/sh"]
 
 ARG ADDOK_VERSION
 ENV ADDOK_VERSION ${ADDOK_VERSION:-v1.1.1}
+ENV ADDOK_ES_VERSION master
 ENV ADDOK_FR_VERSION v1.0.1
+ENV ADDOK_SPAIN_VERSION master
 ENV ADDOK_FRANCE_VERSION v1.1.3
 ENV ADDOK_LUXEMBURG_VERSION v1.2.0
 
@@ -24,6 +26,9 @@ RUN apt-get -q update && \
 RUN pip install gunicorn addok==${ADDOK_VERSION} addok-csv==${ADDOK_CSV_VERSION} && \
     pip install git+https://github.com/Mapotempo/addok_score_preprocessed_query@${ADDOK_SCORE_PREPROCESSSED_QUERY_VERSION} && \
     pip install git+https://github.com/Mapotempo/addok_search2steps@${ADDOK_SEARCH_2_STEPS_VERSION} && \
+    \
+    pip install git+https://github.com/frodrigo/addok-es@${ADDOK_ES_VERSION} && \
+    pip install git+https://github.com/frodrigo/addok-spain@${ADDOK_SPAIN_VERSION} && \
     \
     pip install addok-fr==${ADDOK_FR_VERSION} && \
     pip install addok-france==${ADDOK_FRANCE_VERSION} && \
