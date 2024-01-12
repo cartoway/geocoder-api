@@ -1,3 +1,9 @@
+# 1.2.1
+- new param to sanitize address (remove part in address containing other than street, postal code or city)
+- multiple layers in JS SDK
+- fix Addok requests by avoiding using autocomplete if not needed
+- use of github actions
+
 # 1.1.1
 - use ruby 2.5
 - ability to set count quotas
