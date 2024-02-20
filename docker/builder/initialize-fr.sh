@@ -10,9 +10,8 @@ if [ -z ${DEP} ]; then
 else
   BANO="https://bano.openstreetmap.fr/data/bano-${DEP}.json.gz"
 fi
-cd docker
-mkdir -p addresses-fr
-curl "$BANO" > "./addresses-fr/bano.sjson.gz"
+mkdir -p docker/addresses-fr
+curl "$BANO" > "./docker/addresses-fr/bano.sjson.gz"
 
 cd ..
 
