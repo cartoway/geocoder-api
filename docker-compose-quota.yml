@@ -4,7 +4,7 @@ services:
   api:
     environment:
       REDIS_COUNT_HOST: redis-count
-    links:
+    depends_on:
       - redis-count
 
   redis-count:

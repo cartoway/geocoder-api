@@ -2,7 +2,7 @@ version: '3.7'
 
 services:
   api:
-    links:
+    depends_on:
       - addok-fr
       - addok-lu
     command: bundle exec puma -v -p 80 --pidfile 'server.pid'
@@ -16,7 +16,7 @@ services:
     volumes:
       - ./docker/addok/addok-fr.conf:/etc/addok/addok.conf
       - ./docker/addresses-fr:/addresses
-    links:
+    depends_on:
       - redis-addok-fr
     environment:
       ADDOK_HOST: "redis-addok-fr"
@@ -41,7 +41,7 @@ services:
     volumes:
       - ./docker/addok/addok-lu.conf:/etc/addok/addok.conf
       - ./docker/addresses-lu:/addresses
-    links:
+    depends_on:
       - redis-addok-lu
     environment:
       ADDOK_HOST: "redis-addok-lu"
