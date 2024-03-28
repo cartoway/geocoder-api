@@ -13,8 +13,6 @@ fi
 mkdir -p docker/addresses-fr
 curl "$BANO" > "./docker/addresses-fr/bano.sjson.gz"
 
-cd ..
-
 docker-compose exec redis-addok-fr redis-cli FLUSHALL
 
 docker-compose run --rm addok-fr bash -c "\\
