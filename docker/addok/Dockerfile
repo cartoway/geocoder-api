@@ -13,7 +13,7 @@ ENV ADDOK_CSV_VERSION v1.0.1
 
 ENV ADDOK_FRANCE_CLEAN_VERSION v1.0.0
 ENV ADDOK_LUXEMBURG_CLEAN_VERSION v1.2.0
-ENV ADDOK_SEARCH_2_STEPS_VERSION c83df58
+ENV ADDOK_SEARCH_2_STEPS_VERSION v1.1.0
 ENV ADDOK_USAGE_NAME_BAN_FR_VERSION v1.0.0
 ENV ADDOK_USAGE_NAME_LU_VERSION v1.1.0
 ENV ADDOK_SCORE_PREPROCESSSED_QUERY_VERSION v1.0.0
@@ -23,7 +23,7 @@ RUN apt-get -q update && \
 
 RUN pip install gunicorn addok==${ADDOK_VERSION} addok-csv==${ADDOK_CSV_VERSION} && \
     pip install git+https://github.com/Mapotempo/addok_score_preprocessed_query@${ADDOK_SCORE_PREPROCESSSED_QUERY_VERSION} && \
-    pip install git+https://github.com/Mapotempo/addok_search2steps@${ADDOK_SEARCH_2_STEPS_VERSION} && \
+    pip install git+https://github.com/cartoway/addok_search2steps@${ADDOK_SEARCH_2_STEPS_VERSION} && \
     \
     pip install addok-fr==${ADDOK_FR_VERSION} && \
     pip install addok-france==${ADDOK_FRANCE_VERSION} && \
