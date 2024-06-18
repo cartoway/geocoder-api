@@ -114,10 +114,10 @@ done
 
 cd ../..
 
-docker-compose exec redis-addok-es redis-cli FLUSHALL
+docker compose exec redis-addok-es redis-cli FLUSHALL
 
-docker-compose run --rm addok-es \
+docker compose run --rm addok-es \
   addok batch /addresses/addresses.json
 
-docker-compose run --rm addok-es addok ngrams
-docker-compose exec redis-addok-es redis-cli BGSAVE
+docker compose run --rm addok-es addok ngrams
+docker compose exec redis-addok-es redis-cli BGSAVE

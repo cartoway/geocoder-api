@@ -23,10 +23,10 @@ map({type: "municipality", name: .name, city: .name, postcode: .postcode, lat: (
 
 cat ./docker/addresses-lu/cities.json ./docker/addresses-lu/streets.json > ./docker/addresses-lu/addresses.json
 
-docker-compose exec redis-addok-lu redis-cli FLUSHALL
+docker compose exec redis-addok-lu redis-cli FLUSHALL
 
-docker-compose run --rm addok-lu \
+docker compose run --rm addok-lu \
   addok batch /addresses/addresses.json
 
-docker-compose run --rm addok-lu addok ngrams
-docker-compose exec redis-addok-lu redis-cli BGSAVE
+docker compose run --rm addok-lu addok ngrams
+docker compose exec redis-addok-lu redis-cli BGSAVE

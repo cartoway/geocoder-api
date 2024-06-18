@@ -128,12 +128,12 @@ Enable components in `COMPOSE_FILE` var. Only required for non external engines.
 
 Build docker images
 ```
-docker-compose build
+docker compose build
 ```
 
 Launch containers
 ```
-docker-compose up -d
+docker compose up -d
 ```
 
 The countries data `sanitizer/countryInfo.txt` for supported languages can be update from https://download.geonames.org/export/dump/countryInfo.txt . The data is under creative commons attributions from GeoNames.
