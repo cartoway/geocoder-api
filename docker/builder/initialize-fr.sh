@@ -28,7 +28,6 @@ docker compose run --rm addok-fr bash -c "\\
   jq -c '. | select(.type==\"place\" or .type==\"street\") | . + {citycode: (.citycode // .id) }' | \\
   jq -c 'def mapping: {\"city\":\"municipality\",\"town\":\"municipality\",\"village\":\"municipality\",\"place\":\"locality\",\"street\":\"street\"}; . + {type: mapping[.type]}' | \\
   jq -c 'del(.housenumbers[]?.id)' | \\
-  jq -c '. + {name: (if (.name | type) == \"string\" then .name else .name[] end)}' | \\
   addok batch"
 
 # # Patch BANO
