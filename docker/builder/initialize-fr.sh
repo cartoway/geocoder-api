@@ -19,7 +19,7 @@ docker compose run --rm addok-fr bash -c "\\
   # Duplicate entry, one for each postcode
   # https://github.com/addok/addok/issues/811
   zcat /addresses/bano.sjson.gz | \\
-  jq -c '. | select(.type==\"city\" or .type==\"town\" or .type==\"village\") | . + {citycode: (.citycode // .id) }' | \\
+  jq -c '. | select(.type==\"city\" or .type==\"town\" or .type==\"village\") | . + {citycode: (.citycode // .id) } | (. + {postcode: .postcode | (if type!=\"array\" then . else .[] end)})' | \\
   jq -c 'def mapping: {\"city\":\"municipality\",\"town\":\"municipality\",\"village\":\"municipality\",\"place\":\"locality\",\"street\":\"street\"}; . + {type: mapping[.type]}' | \\
   addok batch"
 
