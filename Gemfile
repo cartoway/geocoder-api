@@ -26,7 +26,9 @@ gem 'geocoder'
 gem 'sqlite3'
 gem 'redis-activesupport'
 
-gem 'sentry-raven'
+gem 'stackprof'
+gem 'sentry-ruby'
+gem 'sentry-rails'
 
 group :test do
   gem 'rack-test'
