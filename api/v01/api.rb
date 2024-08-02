@@ -42,8 +42,8 @@ module Api
           key_print = params[:api_key].rpartition('-')[0]
           key_print = params[:api_key][0..3] if key_print.empty?
           if defined?(Sentry)
-            scope.set_tags(key_print: key_print)
-            scope.set_tags(api_key: params[:api_key])
+            Sentry.set_tags(key_print: key_print)
+            Sentry.set_tags(api_key: params[:api_key])
           end
         end
 
