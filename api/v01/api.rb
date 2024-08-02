@@ -41,9 +41,9 @@ module Api
         if params[:api_key]
           key_print = params[:api_key].rpartition('-')[0]
           key_print = params[:api_key][0..3] if key_print.empty?
-          if defined?(Raven)
-            Raven.tags_context(key_print: key_print)
-            Raven.user_context(api_key: params[:api_key])
+          if defined?(Sentry)
+            scope.set_tags(key_print: key_print)
+            scope.set_tags(api_key: params[:api_key])
           end
         end
 
@@ -156,7 +156,7 @@ module Api
                                            end.to_time.to_i }
           rack_response(format_message(response, nil), 429, headers)
         else
-          Raven.capture_exception(e) if defined?(Raven)
+          Sentry.capture_exception(e) if defined?(Sentry)
           rack_response(format_message(response, e.backtrace), 500)
         end
       end
