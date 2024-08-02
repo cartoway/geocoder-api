@@ -41,6 +41,6 @@ end
 
 group :development, :test do
   gem 'byebug'
-  gem 'rubocop'
+  gem 'rubocop-policy', git: 'https://github.com/cartoway/rubocop-policy'
   gem 'redis', '< 5' # redis-store is buggy with redis 5 https://github.com/redis-store/redis-store/issues/358
 end
