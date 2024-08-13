@@ -8,6 +8,7 @@ services:
       - .:/srv/app
       - ./docker/production.rb:/srv/app/config/environments/production.rb
       - ./docker/production.rb:/srv/app/config/environments/development.rb
+      - ./docker/access.rb:/srv/app/config/access.rb
       - ./poly:/srv/app/poly
     environment:
       REDIS_HOST: redis-cache

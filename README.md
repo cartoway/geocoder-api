@@ -121,6 +121,7 @@ curl -v -X POST -H "Content-Type: text/csv" --data-binary @in.csv http://localho
 Copy and adjust environments files.
 ```bash
 cp ./config/environments/production.rb ./docker/
+cp ./config/access.rb ./docker/
 ```
 
 Create a `.env` from `.env.template`, and adapt if required.
