@@ -12,7 +12,7 @@ services:
       - ./poly:/srv/app/poly
     environment:
       REDIS_HOST: redis-cache
-      APP_ENV: production # Swith to "development" for more traces
+      APP_ENV: ${APP_ENV:-development}
       HERE_APIKEY: ${HERE_APIKEY}
       SENTRY_DSN: ${SENTRY_DSN}
     depends_on:
