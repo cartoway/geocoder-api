@@ -17,9 +17,7 @@
 #
 require './test/test_helper'
 
-
 class Wrappers::RubyGeocoderEsriTest < Minitest::Test
-
   def test_geocodes_from_full_text
     rg = GeocoderWrapper::ESRI
     result = rg.geocodes([{query: '50 Bv de la Plage, Arcachon'}])
@@ -69,7 +67,6 @@ class Wrappers::RubyGeocoderEsriTest < Minitest::Test
     g = result[:features][0][:properties][:geocoding]
     assert_equal 'Alsasua', g[:city]
   end
-
 
   def test_return_geocoder_and_wrapper_version
     rg = GeocoderWrapper::ESRI

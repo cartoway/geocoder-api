@@ -20,7 +20,6 @@ require './test/test_helper'
 require './wrappers/addok'
 
 class Wrappers::AddokTest < Minitest::Test
-
   def test_geocodes_from_full_text
     rg = GeocoderWrapper::ADDOK_FRA
     result = rg.geocodes([{query: '50 Bv de la Plage, Arcachon'}])
@@ -104,5 +103,4 @@ class Wrappers::AddokTest < Minitest::Test
     assert_equal 'city', g[:type]
     assert_equal nil, g[:street]
   end
-
 end if ENV['ADDOK_API']

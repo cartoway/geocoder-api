@@ -33,7 +33,6 @@ require './lib/point_in_polygon'
 
 require 'byebug'
 
-
 module GeocoderWrapper
   Geocoder::Configuration.always_raise = :all
   CACHE = CacheManager.new(ActiveSupport::Cache::NullStore.new)

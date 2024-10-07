@@ -19,7 +19,7 @@ require './wrappers/wrapper'
 
 require 'csv'
 require 'rest-client'
-#RestClient.log = $stdout
+# RestClient.log = $stdout
 require 'ostruct'
 
 module Wrappers
@@ -139,7 +139,7 @@ module Wrappers
 
     def addok_geocode(params, limit, complete)
       params = clean_params params
-      key_params = {limit: limit, complete: complete}.merge(params).reject{ |k, v| k == 'api_key'}
+      key_params = {limit: limit, complete: complete}.merge(params).reject{ |k, v| k == 'api_key' }
       key = [:addok, :geocode, Digest::MD5.hexdigest(Marshal.dump([@url, key_params.to_a.sort_by{ |i| i[0].to_s }]))]
 
       json = @cache.read(key)

@@ -31,7 +31,6 @@ module Wrappers
       features: []
     }
 
-
     def initialize(cache, boundary = nil)
       super(cache, boundary)
     end
@@ -67,7 +66,7 @@ module Wrappers
     private
 
     def opencagedata_geocoder(params, limit)
-      key_params = {limit: limit}.merge(params).reject{ |k, v| k == 'api_key'}
+      key_params = {limit: limit}.merge(params).reject{ |k, v| k == 'api_key' }
       key = [:opencagedata, :geocode, Digest::MD5.hexdigest(Marshal.dump(key_params.to_a.sort_by{ |i| i[0].to_s }))]
 
       r = @cache.read(key)

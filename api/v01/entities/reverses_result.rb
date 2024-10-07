@@ -17,7 +17,6 @@
 #
 require './api/v01/entities/geocode_result_feature'
 
-
 module Api
   module V01
     class ReversesResult < Grape::Entity

@@ -32,10 +32,10 @@ module Wrappers
     }
 
     @@location_type = {
-      'ROOFTOP' =>  1,
-      'RANGE_INTERPOLATED' =>  0.95,
-      'GEOMETRIC_CENTER' =>  0.9,
-      'APPROXIMATE' =>  0.85,
+      'ROOFTOP' => 1,
+      'RANGE_INTERPOLATED' => 0.95,
+      'GEOMETRIC_CENTER' => 0.9,
+      'APPROXIMATE' => 0.85,
     }
 
     @@type = {
@@ -68,7 +68,7 @@ module Wrappers
     end
 
     def geocode(params, limit = 10)
-      key_params = {limit: limit}.merge(params).reject{ |k, v| k == 'api_key'}
+      key_params = {limit: limit}.merge(params).reject{ |k, v| k == 'api_key' }
       key = [:google, :geocode, Digest::MD5.hexdigest(Marshal.dump(key_params.to_a.sort_by{ |i| i[0].to_s }))]
 
       r = @cache.read(key)

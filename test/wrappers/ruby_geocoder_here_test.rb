@@ -17,9 +17,7 @@
 #
 require './test/test_helper'
 
-
 class Wrappers::RubyGeocoderHereTest < Minitest::Test
-
   def test_geocode_from_full_text
     rg = GeocoderWrapper::HERE
     result = rg.geocode({query: 'ул. Неглинная, д.4, Москва, 109012'})

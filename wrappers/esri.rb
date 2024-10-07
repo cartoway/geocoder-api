@@ -17,9 +17,8 @@
 #
 require './wrappers/wrapper'
 
-#require 'rest-client'
-#RestClient.log = $stdout
-
+# require 'rest-client'
+# RestClient.log = $stdout
 
 module Wrappers
   class Esri < Wrapper
@@ -121,33 +120,35 @@ module Wrappers
 
       geojson = @@header.dup
       geojson[:geocoding][:query] = params[:query] || flatten_query(params)
-      geojson[:features] = json['candidates'] && json['candidates'].collect{ |a| {
-        properties: {
-          geocoding: {
-            geocoder_version: version,
-            score: a['score'] / 100 * 0.9,
-            type: @@match_level[a['attributes']['Addr_type']],
-            label: a['address'],
-#            name: a['StAddr'], ############" or or or
-            housenumber: a['attributes']['AddNum'],
-            street: a['attributes']['StAddr'],
-            postcode: [a['address']['Postal'], a['address']['PostalExt']].compact.join(' '),
-            city: a['attributes']['City'],
-#             district: a['attributes']['Subregion'],
-            county: a['attributes']['Subregion'],
-            state: a['attributes']['Region'],
-            country: a['attributes']['Country'],
-          }.delete_if{ |k, v| v.nil? || v == '' }
-        },
-        type: 'Feature',
-        geometry: {
-          coordinates: [
-            a['location']['x'],
-            a['location']['y']
-          ],
-          type: 'Point'
+      geojson[:features] = json['candidates'] && json['candidates'].collect{ |a|
+        {
+          properties: {
+            geocoding: {
+              geocoder_version: version,
+              score: a['score'] / 100 * 0.9,
+              type: @@match_level[a['attributes']['Addr_type']],
+              label: a['address'],
+  #            name: a['StAddr'], ############" or or or
+              housenumber: a['attributes']['AddNum'],
+              street: a['attributes']['StAddr'],
+              postcode: [a['address']['Postal'], a['address']['PostalExt']].compact.join(' '),
+              city: a['attributes']['City'],
+  #             district: a['attributes']['Subregion'],
+              county: a['attributes']['Subregion'],
+              state: a['attributes']['Region'],
+              country: a['attributes']['Country'],
+            }.delete_if{ |k, v| v.nil? || v == '' }
+          },
+          type: 'Feature',
+          geometry: {
+            coordinates: [
+              a['location']['x'],
+              a['location']['y']
+            ],
+            type: 'Point'
+          }
         }
-      }} || []
+      } || []
 
       geojson
     end
@@ -197,9 +198,11 @@ module Wrappers
           end
 
           data = {
-            records: requests.collect{ |p| {
-              attributes: p
-            }}
+            records: requests.collect{ |p|
+              {
+                attributes: p
+              }
+            }
           }
 
           # https://developers.arcgis.com/rest/geocode/api-reference/geocoding-geocode-addresses.htm

@@ -86,6 +86,7 @@ module Api
 
         def count(operation, raise_if_exceed = true, request_size = 1)
           return unless redis_count
+
           @count_val = redis_count.hgetall(count_key(operation)).symbolize_keys
           if @count_val.empty?
             @count_val = {hits: 0, transactions: 0}
@@ -95,6 +96,7 @@ module Api
           APIBase.profile(params[:api_key])[:quotas]&.each do |quota|
             op = quota[:operation]
             next unless op.nil? || op == operation
+
             quota.slice(:daily, :monthly, :yearly).each do |k, v|
               count = redis_count.get(count_base_key(op, k)).to_i
               raise QuotaExceeded.new("Too many #{k} requests", limit: v, remaining: v - count, reset: k) if v && count + request_size > v
@@ -104,6 +106,7 @@ module Api
 
         def count_incr(operation, options)
           return unless redis_count
+
           count operation, false unless @count_val
           incr = {hits: @count_val[:hits].to_i + 1}
           incr[:transactions] = @count_val[:transactions].to_i + options[:transactions] if options[:transactions]
@@ -111,6 +114,7 @@ module Api
           APIBase.profile(params[:api_key])[:quotas]&.each do |quota|
             op = quota[:operation]
             next unless op.nil? || op == operation
+
             quota.slice(:daily, :monthly, :yearly).each do |k, v|
               redis_count.incrby count_base_key(op, k), options[:transactions]
               redis_count.expire count_base_key(op, k), 366.days
@@ -147,13 +151,14 @@ module Api
           headers = { 'Content-Type' => content_type,
                       'X-RateLimit-Limit' => e.data[:limit],
                       'X-RateLimit-Remaining' => e.data[:remaining],
-                      'X-RateLimit-Reset' => if e.data[:reset] == :daily
-                                             count_time.to_date.next_day
-                                           elsif e.data[:reset] == :monthly
-                                             count_time.to_date.next_month
-                                           elsif e.data[:reset] == :yearly
-                                             count_time.to_date.next_year
-                                           end.to_time.to_i }
+                      'X-RateLimit-Reset' =>
+                        if e.data[:reset] == :daily
+                          count_time.to_date.next_day
+                        elsif e.data[:reset] == :monthly
+                          count_time.to_date.next_month
+                        elsif e.data[:reset] == :yearly
+                          count_time.to_date.next_year
+                        end.to_time.to_i }
           rack_response(format_message(response, nil), 429, headers)
         else
           Sentry.capture_exception(e) if defined?(Sentry)

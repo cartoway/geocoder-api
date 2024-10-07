@@ -30,7 +30,6 @@ require './sanitizer/sanitizer'
 require './lib/cache_manager'
 require './lib/point_in_polygon'
 
-
 module GeocoderWrapper
   ActiveSupport::Cache.lookup_store :redis_store
   CACHE = CacheManager.new(ActiveSupport::Cache::RedisStore.new(host: ENV['REDIS_HOST'] || 'localhost', namespace: 'geocoder', expires_in: 60 * 60 * 24 * 1, raise_errors: true))

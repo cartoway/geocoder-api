@@ -96,7 +96,7 @@ module Wrappers
     end
 
     def flatten_query(params, with_country = true)
-      #country field can be nil in case of bulk geocode
+      # country field can be nil in case of bulk geocode
       country = params[:country].nil? ? '' : params[:country]
       if params[:query]
         with_country && !params[:query].include?(country) ? params[:query] + ' ' + country : params[:query]

@@ -17,7 +17,6 @@
 #
 require './api/v01/entities/geocode_result_properties_geocoding'
 
-
 module Api
   module V01
     class GeocodeResultProperties < Grape::Entity

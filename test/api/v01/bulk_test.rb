@@ -128,7 +128,7 @@ class Api::V01::BulkTest < Minitest::Test
       keys = GeocoderWrapper.config[:redis_count].keys("geocoder:geocode:#{Time.now.utc.to_s[0..9]}_key:demo_ip*")
       assert_equal 1, keys.size
       keys.each{ |key|
-        assert_equal({'hits' => "#{i}", 'transactions' => "#{i*3}"}, GeocoderWrapper.config[:redis_count].hgetall(key))
+        assert_equal({'hits' => "#{i}", 'transactions' => "#{i * 3}"}, GeocoderWrapper.config[:redis_count].hgetall(key))
       }
     end
   end
@@ -143,7 +143,7 @@ class Api::V01::BulkTest < Minitest::Test
       keys = GeocoderWrapper.config[:redis_count].keys("geocoder:reverse:#{Time.now.utc.to_s[0..9]}_key:demo_ip*")
       assert_equal 1, keys.size
       keys.each{ |key|
-        assert_equal({'hits' => "#{i}", 'transactions' => "#{i*3}"}, GeocoderWrapper.config[:redis_count].hgetall(key))
+        assert_equal({'hits' => "#{i}", 'transactions' => "#{i * 3}"}, GeocoderWrapper.config[:redis_count].hgetall(key))
       }
     end
   end

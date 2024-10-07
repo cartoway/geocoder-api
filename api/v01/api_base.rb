@@ -21,7 +21,6 @@ require 'grape-swagger'
 module Api
   module V01
     class APIBase < Grape::API
-
       def self.profile(api_key)
         raise 'Profile missing in configuration' unless ::GeocoderWrapper.config[:profiles].key? ::GeocoderWrapper.access[api_key][:profile]
 

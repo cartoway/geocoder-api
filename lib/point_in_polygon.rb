@@ -18,9 +18,7 @@
 require 'sqlite3'
 require 'ostruct'
 
-
 class PointInPolygon
-
   def initialize(sqlite)
     @db = SQLite3::Database.new(sqlite)
     @db.enable_load_extension(1)
@@ -56,7 +54,7 @@ LIMIT 1
           type: 'municipality',
           label: row[1],
           name: row[0],
-          #postcode:
+          # postcode:
           city: row[0],
         ),
         type: 'Point',

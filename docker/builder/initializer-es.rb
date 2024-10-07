@@ -2,7 +2,6 @@ require 'csv'
 require 'i18n'
 I18n.available_locales = [:en]
 
-
 CSV(STDOUT) { |out|
   out << ['lon', 'lat', 'id', 'street_type', 'street_name', 'number', 'ext', 'city' , 'postcode']
   CSV.parse(STDIN, headers: true) { |row|

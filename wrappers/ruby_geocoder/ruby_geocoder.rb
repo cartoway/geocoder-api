@@ -51,6 +51,7 @@ module Wrappers
 
     def build_request_query(params, maybe_streets)
       return params unless maybe_streets
+
       p = params.dup
       gen_streets(params).map do |street|
         p[:street] = street

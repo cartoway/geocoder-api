@@ -17,9 +17,7 @@
 #
 require './test/test_helper'
 
-
 class Wrappers::RubyGeocoderGoogleTest < Minitest::Test
-
   def test_geocode_from_full_text
     rg = GeocoderWrapper::GOOGLE
     result = rg.geocode({query: 'Front Street, NYC'})

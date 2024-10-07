@@ -18,7 +18,7 @@
 ENV['APP_ENV'] ||= 'development'
 Bundler.require
 require File.expand_path('../config/environments/' + ENV['APP_ENV'], __FILE__)
-Dir[File.dirname(__FILE__) + '/config/initializers/*.rb'].each {|file| require file }
+Dir[File.dirname(__FILE__) + '/config/initializers/*.rb'].each { |file| require file }
 require './geocoder_wrapper'
 require './api/root'
 require 'rack/cors'
@@ -45,7 +45,7 @@ use Rack::Cors do
   end
 end
 
-#\ -p 8558
+# \ -p 8558
 run Api::Root
 
 use Rack::Config do |env|

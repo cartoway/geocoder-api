@@ -18,7 +18,6 @@
 require './api/v01/entities/geocode_result_properties'
 require './api/v01/entities/geo_json_geometry'
 
-
 module Api
   module V01
     class GeocodeResultFeature < Grape::Entity

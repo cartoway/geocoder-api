@@ -18,7 +18,6 @@
 require './test/test_helper'
 
 class Wrappers::RubyGeocoderOpencagedataTest < Minitest::Test
-
   def test_geocode_from_full_text
     rg = GeocoderWrapper::OPENCAGEDATA
     result = rg.geocode({query: '1 Front Street, NYC'})
