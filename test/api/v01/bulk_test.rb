@@ -160,10 +160,10 @@ class Api::V01::BulkTest < Minitest::Test
     ]}
     assert_equal 429, last_response.status
     assert JSON.parse(last_response.body)['message'].include?('Too many monthly requests')
-    assert_equal({ "Content-Type" => "application/json; charset=UTF-8",
-                   "X-RateLimit-Limit" => 2,
-                   "X-RateLimit-Remaining" => 0,
-                   "X-RateLimit-Reset" => Time.now.utc.to_date.next_month.to_time.to_i }, last_response.headers)
+    assert_equal({ 'Content-Type' => 'application/json; charset=UTF-8',
+                   'X-RateLimit-Limit' => 2,
+                   'X-RateLimit-Remaining' => 0,
+                   'X-RateLimit-Reset' => Time.now.utc.to_date.next_month.to_time.to_i }, last_response.headers)
   end
 
   def test_should_geocode_when_at_least_one_of_query_postcode_city_street
@@ -176,7 +176,7 @@ class Api::V01::BulkTest < Minitest::Test
 
     body = JSON.parse(last_response.body)
     assert last_response.ok?, last_response.body
-    assert body["geocodes"].count, geocodes.count
+    assert body['geocodes'].count, geocodes.count
   end
 
   def test_should_geocode_without_sanitizing_addresses

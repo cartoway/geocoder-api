@@ -72,7 +72,7 @@ class Api::V01::UnitaryTest < Minitest::Test
       get '/0.1/geocode', { api_key: 'demo', country: 'fr' }.merge(attr)
       body = JSON.parse(last_response.body)
 
-      assert body["geocoding"]["query"], attr.flat_map{ |key, value| value }.compact.first
+      assert body['geocoding']['query'], attr.flat_map{ |key, value| value }.compact.first
       assert last_response.ok?, last_response.body
     end
   end
@@ -100,7 +100,7 @@ class Api::V01::UnitaryTest < Minitest::Test
   def test_geocode_addok_missing_query
     get '/0.1/geocode', {api_key: 'demo', query: '', country: 'fr', limit: 2}
     assert_equal last_response.status, 400
-    assert_equal "query is empty", JSON.parse(last_response.body)["message"]
+    assert_equal 'query is empty', JSON.parse(last_response.body)['message']
   end
 
   def test_count_geocode
@@ -142,10 +142,10 @@ class Api::V01::UnitaryTest < Minitest::Test
     patch '/0.1/geocode', {api_key: 'bulk_limit', query: 'Place Pey Berland, Bordeaux', country: 'demo'}
     assert_equal 429, last_response.status
     assert JSON.parse(last_response.body)['message'].include?('Too many daily requests')
-    assert_equal({ "Content-Type" => "application/json; charset=UTF-8",
-                   "X-RateLimit-Limit" => 1,
-                   "X-RateLimit-Remaining" => 0,
-                   "X-RateLimit-Reset" => Time.now.utc.to_date.next_day.to_time.to_i }, last_response.headers)
+    assert_equal({ 'Content-Type' => 'application/json; charset=UTF-8',
+                   'X-RateLimit-Limit' => 1,
+                   'X-RateLimit-Remaining' => 0,
+                   'X-RateLimit-Reset' => Time.now.utc.to_date.next_day.to_time.to_i }, last_response.headers)
   end
 
   def test_nil_quotas
@@ -171,7 +171,7 @@ class Api::V01::UnitaryTest < Minitest::Test
 
   def test_should_geocode_sanitizing_address
     query = 'Place Pey Berland'
-    city = "Bordeaux"
+    city = 'Bordeaux'
     suffix = ',(en haut)'
 
     get '/0.1/geocode', {api_key: 'demo', sanitize_address: true, query: query + suffix + city, country: 'fr'}
