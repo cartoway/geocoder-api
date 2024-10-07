@@ -1,3 +1,12 @@
+GIT
+  remote: https://github.com/cartoway/rubocop-policy.git
+  revision: 209bde9a8088d4204b22829b2a9150860c16dcac
+  specs:
+    rubocop-policy (0.1.0)
+      rubocop (~> 1.56.1)
+      rubocop-minitest (~> 0.31.0)
+      rubocop-performance (~> 1.19.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -158,6 +167,11 @@ GEM
       unicode-display_width (>= 2.4.0, < 3.0)
     rubocop-ast (1.29.0)
       parser (>= 3.2.1.0)
+    rubocop-minitest (0.31.1)
+      rubocop (>= 1.39, < 2.0)
+    rubocop-performance (1.19.1)
+      rubocop (>= 1.7.0, < 2.0)
+      rubocop-ast (>= 0.4.0)
     ruby-progressbar (1.13.0)
     ruby2_keywords (0.0.5)
     sentry-ruby (5.18.2)
@@ -210,6 +224,7 @@ DEPENDENCIES
   rest-client
   rexml
   rubocop
+  rubocop-policy!
   sentry-ruby
   simplecov
   sqlite3

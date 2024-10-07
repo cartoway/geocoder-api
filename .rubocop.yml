@@ -1,89 +1,30 @@
-Layout/ParameterAlignment:
+inherit_gem:
+  rubocop-policy:
+    - rubocop-default.yml
+
+Layout/LineLength:
+  Max: 1000
+
+Style/StringConcatenation:
   Enabled: false
 
-Layout/SpaceBeforeBlockBraces:
+Style/ZeroLengthPredicate:
   Enabled: false
 
-Metrics/MethodLength:
-  Enabled: false
+Layout/ArrayAlignment:
+  EnforcedStyle: with_fixed_indentation
 
-Metrics/AbcSize:
-  Enabled: false
-
-Style/AsciiComments:
-  Enabled: false
-
-Metrics/PerceivedComplexity:
-  Enabled: false
-
-Metrics/CyclomaticComplexity:
-  Enabled: false
-
-Style/DoubleNegation:
-  Enabled: false
-
-Style/TrailingCommaInArrayLiteral:
-  Enabled: false
-
-Style/TrailingCommaInHashLiteral:
-  Enabled: false
-
-Style/TrailingCommaInArguments:
-  Enabled: false
-
-Style/MultilineBlockChain:
-  Enabled: false
-
-Layout/SpaceInsideHashLiteralBraces:
-  Enabled: false
+Layout/ArgumentAlignment:
+  EnforcedStyle: with_fixed_indentation
 
 Style/NegatedIf:
   Enabled: false
 
-Layout/FirstHashElementIndentation:
-  Enabled: false
-
-Style/NumericLiterals:
-  Enabled: false
-
-Layout/LeadingCommentSpace:
-  Enabled: false
-
-Style/SignalException:
-  Enabled: false
-
-Style/IfUnlessModifier:
-  Enabled: false
-
-Layout/CommentIndentation:
-  Enabled: false
-
-Layout/FirstArrayElementIndentation:
-  Enabled: false
-
-Style/ClassAndModuleChildren:
-  Enabled: false
-
-Metrics/ClassLength:
-  Enabled: false
-
-Layout/IndentationWidth:
-  Enabled: false
-
 Layout/EndAlignment:
+  EnforcedStyleAlignWith: variable
+
+Minitest/RefuteFalse:
   Enabled: false
 
-Layout/ElseAlignment:
-  Enabled: false
-
-Style/BlockDelimiters:
-  Enabled: false
-
-Style/RedundantSelf:
-  Enabled: false
-
-Style/SymbolArray:
-  Enabled: false
-
-Style/Documentation:
+Minitest/RefuteEqual:
   Enabled: false
