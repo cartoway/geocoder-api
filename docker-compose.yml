@@ -1,7 +1,7 @@
 services:
   api:
     build: .
-    image: geocoder-api:${CARTOROUTE_VERSION:-latest}
+    image: ghcr.io/cartoway/geocoder-api:${CARTOROUTE_VERSION:-master}
     ports:
       - "8081:80" # HOST:CONTAINER, edit only HOST part
     volumes:
