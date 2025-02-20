@@ -66,12 +66,12 @@ module Wrappers
 
     def geocode(params, limit = 10)
       r = @@header.dup
-      r[:geocoding][:query] = params[:query]
+      r[:geocoding][:query] = params[:query] || [params[:street], params[:postcode], params[:city]].compact.join(', ')
       r[:features] = ([@@feature] * limit).collect(&:dup)
       r
     end
 
-    def reverse(params)
+    def reverse(_params)
       r = @@header.dup
       r[:features] = [@@feature].collect(&:dup)
       r

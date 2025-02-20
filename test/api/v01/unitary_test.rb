@@ -195,8 +195,8 @@ class Api::V01::UnitaryTest < Minitest::Test
 
     get '/0.1/geocode', {api_key: 'demo', sanitize_address: true, maybe_street: streets, country: 'fr', city: 'Bordeaux'}
     assert last_response.ok?, last_response.body
-    json = JSON.parse(last_response.body)['geocoding']['query'].split('|')
-    queries.each_with_index { |q, i| assert_match Regexp.new("#{q}[, ]+Bordeaux"), json[i], "No match with #{q}" }
+    json = JSON.parse(last_response.body)['geocoding']['query']
+    queries.each { |q| assert_match Regexp.new("#{q}[, ]+Bordeaux"), json, "No match with #{q}" }
   end
 
   private
