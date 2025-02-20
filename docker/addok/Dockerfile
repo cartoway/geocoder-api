@@ -41,6 +41,11 @@ RUN pip install gunicorn addok==${ADDOK_VERSION} addok-csv==${ADDOK_CSV_VERSION}
     pip install git+https://github.com/cartoway/addok_luxemburg_clean@${ADDOK_LUXEMBURG_CLEAN_VERSION} && \
     pip install git+https://github.com/cartoway/addok_usage_name_LU@${ADDOK_USAGE_NAME_LU_VERSION}
 
+# Patch Addok
+ADD multi-filter.diff .
+RUN patch -p2 -d /usr/local/lib/python3.11/site-packages/addok < multi-filter.diff && \
+    rm multi-filter.diff
+
 EXPOSE 7878
 
 VOLUME /etc/addok/addok.conf
