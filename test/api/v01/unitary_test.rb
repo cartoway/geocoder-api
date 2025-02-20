@@ -72,7 +72,7 @@ class Api::V01::UnitaryTest < Minitest::Test
       get '/0.1/geocode', { api_key: 'demo', country: 'fr' }.merge(attr)
       body = JSON.parse(last_response.body)
 
-      assert body['geocoding']['query'], attr.flat_map{ |key, value| value }.compact.first
+      assert body['geocoding']['query'], attr.flat_map{ |_key, value| value }.compact.first
       assert last_response.ok?, last_response.body
     end
   end
@@ -141,7 +141,7 @@ class Api::V01::UnitaryTest < Minitest::Test
     assert last_response.ok?, last_response.body
     patch '/0.1/geocode', {api_key: 'bulk_limit', query: 'Place Pey Berland, Bordeaux', country: 'demo'}
     assert_equal 429, last_response.status
-    assert JSON.parse(last_response.body)['message'].include?('Too many daily requests')
+    assert_includes JSON.parse(last_response.body)['message'], 'Too many daily requests'
     assert_equal({ 'Content-Type' => 'application/json; charset=UTF-8',
                    'X-RateLimit-Limit' => 1,
                    'X-RateLimit-Remaining' => 0,
