@@ -3,7 +3,8 @@
 set -e
 
 mkdir -p ./docker/addresses-lu/
-wget https://download.data.public.lu/resources/adresses-georeferencees-bd-adresses/20230925-043222/addresses.geojson -O ./docker/addresses-lu/addresses.geojson
+# https://data.public.lu/fr/datasets/adresses-georeferencees-bd-adresses/
+wget https://download.data.public.lu/resources/adresses-georeferencees-bd-adresses/20250408-142137/addresses.geojson -O ./docker/addresses-lu/addresses.geojson
 
 jq -c '.features |
 map(.properties + {lon: .geometry.coordinates[0], lat: .geometry.coordinates[1]}) |
