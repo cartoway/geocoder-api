@@ -46,6 +46,14 @@ ADD multi-filter.diff .
 RUN patch -p2 -d /usr/local/lib/python3.11/site-packages/addok < multi-filter.diff && \
     rm multi-filter.diff
 
+VOLUME /etc/addok/addok.conf
+
 EXPOSE 7878
 
-VOLUME /etc/addok/addok.conf
+HEALTHCHECK \
+    --start-interval=1s \
+    --start-period=30s \
+    --interval=30s \
+    --timeout=20s \
+    --retries=5 \
+    CMD wget --no-verbose --tries=1 -O /dev/null http://127.0.0.1:7878/health || exit 1

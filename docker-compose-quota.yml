@@ -11,4 +11,11 @@ services:
     command: redis-server --appendonly yes
     volumes:
       - ./docker/redis-count:/data
+    healthcheck:
+      test: redis-cli --raw incr ping
+      start_interval: 1s
+      start_period: 30s
+      interval: 30s
+      timeout: 10s
+      retries: 5
     restart: unless-stopped

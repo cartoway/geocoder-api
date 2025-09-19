@@ -31,6 +31,13 @@ services:
     command: redis-server --save ""
     volumes:
       - ./docker/redis-es:/data
+    healthcheck:
+      test: redis-cli --raw incr ping
+      start_interval: 1s
+      start_period: 30s
+      interval: 30s
+      timeout: 10s
+      retries: 5
     restart: unless-stopped
 
   # France
@@ -56,6 +63,13 @@ services:
     command: redis-server --save ""
     volumes:
       - ./docker/redis-fr:/data
+    healthcheck:
+      test: redis-cli --raw incr ping
+      start_interval: 1s
+      start_period: 30s
+      interval: 30s
+      timeout: 10s
+      retries: 5
     restart: unless-stopped
 
   # Luxemburg
@@ -80,4 +94,11 @@ services:
     command: redis-server --save ""
     volumes:
       - ./docker/redis-lu:/data
+    healthcheck:
+      test: redis-cli --raw incr ping
+      start_interval: 1s
+      start_period: 30s
+      interval: 30s
+      timeout: 10s
+      retries: 5
     restart: unless-stopped
