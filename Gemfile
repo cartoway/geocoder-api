@@ -25,6 +25,7 @@ gem 'grape-erb'
 gem 'geocoder'
 gem 'redis-activesupport'
 gem 'sqlite3'
+gem 'csv'
 
 gem 'sentry-ruby'
 
@@ -33,6 +34,7 @@ group :test do
   gem 'minitest'
   gem 'minitest-focus'
   gem 'minitest-reporters'
+  gem 'mutex_m' # Required by simplecov
   gem 'rack-test'
   gem 'simplecov', require: false
 end
