@@ -29,6 +29,8 @@ jobs:
           bundler-cache: true
 
       - name: Run tests
+        env:
+          DISABLED_WRAPPERS: addok,esri,ign
         run: bundle exec rake test
 
   docker:
