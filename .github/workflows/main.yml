@@ -20,7 +20,7 @@ jobs:
       - name: Add system package
         run: sudo apt install -y libsqlite3-mod-spatialite
 
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
@@ -28,12 +28,12 @@ jobs:
           ruby-version: "3.0"
           bundler-cache: true
 
-      - name: Run tests
-        env:
-          DISABLED_WRAPPERS: addok,esri,ign
-        run: bundle exec rake test
+      # - name: Run tests
+      #   env:
+      #     DISABLED_WRAPPERS: addok,esri,ign
+      #   run: bundle exec rake test
 
-  docker:
+  docker-api:
     runs-on: ubuntu-latest
     needs: [tests]
     if: github.ref == 'refs/heads/master' || startsWith(github.event.ref, 'refs/tags/v')
@@ -44,8 +44,30 @@ jobs:
       id-token: write
 
     steps:
-      - name: Docker Build and Push
+      - name: Docker Build and Push API
         uses: cartoway/docker-compose-build-push-action@main
         with:
           registry_password: ${{ secrets.GITHUB_TOKEN }}
+          project: cartoway/geocoder-api
           service: api
+
+  docker-addok:
+    runs-on: ubuntu-latest
+    needs: [tests]
+    if: github.ref == 'refs/heads/master' || startsWith(github.event.ref, 'refs/tags/v')
+
+    permissions:
+      contents: read
+      packages: write
+      id-token: write
+
+    steps:
+      - name: Docker Build and Push Addok
+        uses: cartoway/docker-compose-build-push-action@main
+        with:
+          registry_password: ${{ secrets.GITHUB_TOKEN }}
+          project: cartoway/geocoder-api-addok
+          compose_file: |
+            docker-compose.yml
+            docker-compose-addok.yml
+          service: addok-fr

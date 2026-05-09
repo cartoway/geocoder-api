@@ -11,7 +11,7 @@ services:
   addok-es:
     build:
       context: docker/addok
-    image: addok:${CARTOROUTE_VERSION:-latest}
+    image: ghcr.io/cartoway/geocoder-api-addok:${CARTOROUTE_VERSION:-master}
     volumes:
       - ./docker/addok/addok-es.conf:/etc/addok/addok.conf
       - ./docker/addresses-es:/addresses
@@ -44,7 +44,7 @@ services:
   addok-fr:
     build:
       context: docker/addok
-    image: addok:${CARTOROUTE_VERSION:-latest}
+    image: ghcr.io/cartoway/geocoder-api-addok:${CARTOROUTE_VERSION:-master}
     volumes:
       - ./docker/addok/addok-fr.conf:/etc/addok/addok.conf
       - ./docker/addresses-fr:/addresses
@@ -76,7 +76,7 @@ services:
   addok-lu:
     build:
       context: docker/addok
-    image: addok:${CARTOROUTE_VERSION:-latest}
+    image: ghcr.io/cartoway/geocoder-api-addok:${CARTOROUTE_VERSION:-master}
     volumes:
       - ./docker/addok/addok-lu.conf:/etc/addok/addok.conf
       - ./docker/addresses-lu:/addresses
