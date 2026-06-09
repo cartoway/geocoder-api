@@ -63,6 +63,7 @@ jobs:
 
     steps:
       - name: Docker Build and Push Addok
+        if: vars.ADDOK_BUILD
         uses: cartoway/docker-compose-build-push-action@main
         with:
           registry_password: ${{ secrets.GITHUB_TOKEN }}
