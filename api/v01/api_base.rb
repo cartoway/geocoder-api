@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Copyright © Mapotempo, 2016
 #
 # This file is part of Mapotempo.

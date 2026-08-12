@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Copyright © Mapotempo, 2015
 #
 # This file is part of Mapotempo.
@@ -47,7 +49,7 @@ module Api
           end
         end
 
-        if !params || !GeocoderWrapper.access(true).keys.include?(params[:api_key])
+        if !params || !GeocoderWrapper.access(true).key?(params[:api_key])
           error!('401 Unauthorized', 401)
         elsif GeocoderWrapper.access[params[:api_key]][:expire_at]&.to_date&.send(:<, Date.today)
           error!('402 Subscription expired', 402)

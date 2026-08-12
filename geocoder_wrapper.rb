@@ -48,7 +48,7 @@ module GeocoderWrapper
 
   def self.wrapper_geocodes(services, list_params)
     by_country = list_params.each_with_index.group_by do |params, _|
-     self.geocode_country(params[:country]) if params[:country]
+      self.geocode_country(params[:country]) if params[:country]
     end
     geocode_results = by_country.flat_map do |country, params_list|
       params_list.collect! do |params, index|

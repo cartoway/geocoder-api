@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Copyright © Mapotempo, 2015
 #
 # This file is part of Mapotempo.
@@ -175,7 +177,7 @@ module Wrappers
         licence: json['licence'],
         attribution: json['attribution'],
         query: json['query'],
-      }.select{ |k, v| not v.nil? }
+      }.select{ |_k, v| !v.nil? }
 
       json['features'].collect{ |features|
         p = features['properties']

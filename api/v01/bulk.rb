@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Copyright © Mapotempo, 2015
 #
 # This file is part of Mapotempo.
@@ -26,7 +28,7 @@ module Api
     module CSVParser
       def self.call(object, env)
         {
-          # TODO use encoding from Content-Type or detect it.
+          # TODO: use encoding from Content-Type or detect it.
           geocodes: CSV.parse(object.force_encoding('utf-8'), headers: true).collect{ |row|
             r = row.to_h
             r['maybe_street'] = row.each.select{ |k, _| k == 'maybe_street' }.collect(&:last).select{ |t| t && t != '' }
@@ -49,7 +51,7 @@ module Api
             }
           }
         else
-         ''
+          ''
         end
       end
     end
@@ -139,13 +141,11 @@ module Api
           count :reverse, true, params[:reverses].count
 
           params[:reverses].each do |param|
-            begin
-              param[:lat] = param[:lat].is_a?(Float) ? param[:lat] : Float(param[:lat].gsub(',', '.'))
-              param[:lng] = param[:lng].is_a?(Float) ? param[:lng] : Float(param[:lng].gsub(',', '.'))
-            rescue
-              param[:lat] = nil
-              param[:lng] = nil
-            end
+            param[:lat] = param[:lat].is_a?(Float) ? param[:lat] : Float(param[:lat].gsub(',', '.'))
+            param[:lng] = param[:lng].is_a?(Float) ? param[:lng] : Float(param[:lng].gsub(',', '.'))
+          rescue
+            param[:lat] = nil
+            param[:lng] = nil
           end
           results = GeocoderWrapper.wrapper_reverses(APIBase.profile(params[:api_key]), params[:reverses])
           if results
