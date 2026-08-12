@@ -109,6 +109,8 @@ module Api
           else
             error!('500 Internal Server Error', 500)
           end
+        rescue Wrappers::QueryTooLongError => e
+          error!({message: e.message}, e.http_status)
         end
       end
 

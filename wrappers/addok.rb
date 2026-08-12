@@ -221,6 +221,8 @@ module Wrappers
         case response.code
         when 200
           response
+        when 413
+          raise QueryTooLongError.new(response)
         else
           raise [response.code, response].select{ |t| t && t != '' }.join(' ')
         end

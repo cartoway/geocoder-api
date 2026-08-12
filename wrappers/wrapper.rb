@@ -18,6 +18,10 @@
 require 'border_patrol'
 
 module Wrappers
+  class QueryTooLongError < StandardError
+    @@http_status = 413
+  end
+
   class Wrapper
     def initialize(cache, boundary = nil)
       @cache = cache
