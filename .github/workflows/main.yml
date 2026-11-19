@@ -20,12 +20,12 @@ jobs:
       - name: Add system package
         run: sudo apt install -y libsqlite3-mod-spatialite
 
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: "3.0"
+          ruby-version: "3.4"
           bundler-cache: true
 
       # - name: Run tests

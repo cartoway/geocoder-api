@@ -1,6 +1,8 @@
 source 'https://rubygems.org'
 ruby '>= 3'
 
+gem 'base64' # Indirect dependency, but need it here
+
 gem 'puma'
 gem 'rack'
 gem 'rack-cors'
@@ -16,16 +18,17 @@ gem 'grape-swagger-entity'
 gem 'actionpack'
 gem 'activesupport'
 gem 'border_patrol'
+gem 'mutex_m'
 gem 'rack-contrib'
 gem 'rest-client'
 gem 'rexml'
 
+gem 'csv'
 gem 'grape-erb'
 # Extra : Implementing autocomplete url to here and google_places_search
 gem 'geocoder'
 gem 'redis-activesupport'
 gem 'sqlite3'
-gem 'csv'
 
 gem 'sentry-ruby'
 
@@ -34,7 +37,6 @@ group :test do
   gem 'minitest'
   gem 'minitest-focus'
   gem 'minitest-reporters'
-  gem 'mutex_m' # Required by simplecov
   gem 'rack-test'
   gem 'simplecov', require: false
 end
